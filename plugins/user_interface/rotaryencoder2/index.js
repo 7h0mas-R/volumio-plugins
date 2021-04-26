@@ -85,12 +85,12 @@ rotaryencoder2.prototype.onStart = function() {
 	var defer=libQ.defer();
 	var activate = [];
 
-	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStart: Config loaded: ' + JSON.stringify(self.config));
-	for (let i = 0; i < maxRotaries; i++) {
-		if (self.config.get('enabled'+i)) {
-			activate.push(i);
-		}	
-	}
+	// if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStart: Config loaded: ' + JSON.stringify(self.config));
+	// for (let i = 0; i < maxRotaries; i++) {
+	// 	if (self.config.get('enabled'+i)) {
+	// 		activate.push(i);
+	// 	}	
+	// }
 	socket.emit('getState');
 	socket.on('pushState',function(data){
 		self.status = data;
@@ -98,41 +98,54 @@ rotaryencoder2.prototype.onStart = function() {
 		// if (self.debugLogging) self.logger.info('[ROTARYENCODER2] received Websock Status: ' + JSON.stringify(self.status));
 	})
 	try {
+		if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStart: Now assign Inputs: ' + (self.input_center) + ' ' + (self.input_right));
 		self.button = new Gpio(22, 'in', 'falling', {debounceTimeout: 20});
-		self.input_right = new InputEvent('/dev/input/by-path/platform-rotary\@1b-event');
-		self.input_center = new InputEvent('/dev/input/by-path/platform-rotary\@17-event');
-		
-		self.rotary_right = new InputEvent.Rotary(input_right);
-		self.rotary_center = new InputEvent.Rotary(input_center);
-
-		self.rotary_center.on('left'  , ev => {
-			if (self.debugLogging) self.logger.info('[ROTARYENCODER2] Vol left' + ev);
-			socket.emit('volume','-')
-		});
-		self.rotary_center.on('right' , ev => {
-			if (self.debugLogging) self.logger.info('[ROTARYENCODER2] Vol right' + ev)
-			socket.emit('volume','+')
-		});
-		self.rotary_right.on('left'  , ev => {
-			if (self.debugLogging) self.logger.info('[ROTARYENCODER2] skip left' +  ev);
-			socket.emit('prev')
-		});
-		self.rotary_right.on('right' , ev => {
-			if (self.debugLogging) self.logger.info('[ROTARYENCODER2] skip right' + ev);
-			socket.emit('next')
-		});
-		self.button.watch((err, value) => {
-			if (err) {
-			  throw err;
-			}
-			socket.emit('toggle')
-		});
-	} catch (error) {
-		self.commandRouter.pushToastMessage('error',"Rotary Encoder II", self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_STOP_FAIL'))
-		self.logger.error('[ROTARYENCODER2] onStart: Failed to start plugin:' + error)
-		defer.reject();
+		self.input_right = new inputEvent('/dev/input/by-path/platform-rotary\@1b-event');
+		self.input_center = new inputEvent('/dev/input/by-path/platform-rotary\@17-event');
+		if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStart: Inputs assigned: ' + (self.input_center) + ' ' + (self.input_right));
 	}
-	self.commandRouter.pushToastMessage('success',"Rotary Encoder II",  self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_START_SUCCESS'))
+	catch (error)  {
+		self.logger.info('[ROTARYENCODER2] inputs not initialized');
+	}
+	// try {
+		if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStart: Now assign Inputs: ' + (self.rotary_right) + ' ' + (self.rotary_center));
+	// 	self.rotary_right = new inputEvent.Rotary(self.input_right);
+	// 	self.rotary_center = new inputEvent.Rotary(self.input_center);
+	// 	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStart: Rotaries assigned: ' + (self.rotary_center) + ' ' + (self.rotary_right));
+	// }
+	// catch (error) {
+	// 	self.logger.info('[ROTARYENCODER2] rotaries not initialized');
+	// }
+	// try {
+	// 	self.rotary_center.on('left'  , ev => {
+	// 		if (self.debugLogging) self.logger.info('[ROTARYENCODER2] Vol left' + ev);
+	// 		socket.emit('volume','-')
+	// 	});
+	// 	self.rotary_center.on('right' , ev => {
+	// 		if (self.debugLogging) self.logger.info('[ROTARYENCODER2] Vol right' + ev)
+	// 		socket.emit('volume','+')
+	// 	});
+	// 	self.rotary_right.on('left'  , ev => {
+	// 		if (self.debugLogging) self.logger.info('[ROTARYENCODER2] skip left' +  ev);
+	// 		socket.emit('prev')
+	// 	});
+	// 	self.rotary_right.on('right' , ev => {
+	// 		if (self.debugLogging) self.logger.info('[ROTARYENCODER2] skip right' + ev);
+	// 		socket.emit('next')
+	// 	});
+	// 	self.button.watch((err, value) => {
+	// 		if (err) {
+	// 		  throw err;
+	// 		}
+	// 		socket.emit('toggle')
+	// 	});
+	// } catch (error) {
+	// 	// self.commandRouter.pushToastMessage('error',"Rotary Encoder II", self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_STOP_FAIL'))
+	// 	self.commandRouter.pushToastMessage('error',"Rotary Encoder II - failed to load")
+	// 	self.logger.error('[ROTARYENCODER2] onStart: Failed to start plugin:' + error)
+	// 	defer.reject();
+	// }
+	self.commandRouter.pushToastMessage('success',"Rotary Encoder II - successfully loaded")
 	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStart: Plugin successfully started.');				
 	defer.resolve();				
 
@@ -150,10 +163,10 @@ rotaryencoder2.prototype.onStop = function() {
 		socket.disconnect();
 		self.button.unwatchAll();
 		self.button.unexport()
-		self.rotary_center.removeAllListeners();
-		self.rotary_right.removeAllListeners();
-		self.rotary_center.close();
-		self.rotary_right.close();
+		// self.rotary_center.removeAllListeners();
+		// self.rotary_right.removeAllListeners();
+		// self.rotary_center.close();
+		// self.rotary_right.close();
 		self.input_center.close();
 		self.input_right.close();
 	} catch (error) {
