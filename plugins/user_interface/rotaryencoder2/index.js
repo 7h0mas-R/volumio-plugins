@@ -100,10 +100,13 @@ rotaryencoder2.prototype.onStart = function() {
 		self.logger.info('[ROTARYENCODER2] buttons not initialized');
 	}
 
-	self.addOverlay(17,27)
-	.then(_=>self.attachListener(17))
+	self.addOverlay(17,27,2)
+	.then(_=>{
+		return self.attachListener(17);
+		self.logger.info('[ROTARYENCODER2] attached 1');
+	})
 	.then(handle => {
-		self.fd1 = handle;	
+		self.fd1=handle;
 		self.fd1.stdout.on("data", function (chunk) {
 			var i=0,got=0
 			while (chunk.length - i >= 16) {
@@ -126,43 +129,52 @@ rotaryencoder2.prototype.onStart = function() {
 					}
 				} 
 			}
-		})
+		});
+		self.logger.info('[ROTARYENCODER2] events 1');
 	})
-	// .then(_=> self.addOverlay(24,23))
-	// .then(self.attachListener(24))
-	// .then(handle => {
-	// 	self.fd2 = handle;	
-	// 	self.fd2.stdout.on("data", function (chunk) {
-	// 		var i=0,got=0
-	// 		while (chunk.length - i >= 16) {
-	// 			var s = chunk.readUInt32LE(i+0)
-	// 			var us = chunk.readUInt32LE(i+4)
-	// 			var type = chunk.readUInt16LE(i+8)
-	// 			var code = chunk.readUInt16LE(i+10)
-	// 			var value = chunk.readInt32LE(i+12)
-	// 			i += 16
-	// 			if (type == 2) {
-	// 				switch (value) {
-	// 					case 1:
-	// 						socket.emit('volume','+');
-	// 						break;
-	// 					case -1:
-	// 						socket.emit('volume','-');
-	// 						break;
-	// 					default:
-	// 						break;
-	// 				}
-	// 			} 
-	// 		}
-	// 	})
-	// })
+	.then(_=> {
+		return self.addOverlay(24,23,2);
+		self.logger.info('[ROTARYENCODER2] added 2');
+	})
+	.then(_=> {
+		return self.attachListener(24)
+		self.logger.info('[ROTARYENCODER2] attached 2');
+	})
+	.then(handle => {
+		self.fd2 = handle;	
+		self.fd2.stdout.on("data", function (chunk) {
+			var i=0,got=0
+			while (chunk.length - i >= 16) {
+				var s = chunk.readUInt32LE(i+0)
+				var us = chunk.readUInt32LE(i+4)
+				var type = chunk.readUInt16LE(i+8)
+				var code = chunk.readUInt16LE(i+10)
+				var value = chunk.readInt32LE(i+12)
+				i += 16
+				if (type == 2) {
+					switch (value) {
+						case 1:
+							socket.emit('volume','+');
+							break;
+						case -1:
+							socket.emit('volume','-');
+							break;
+						default:
+							break;
+					}
+				} 
+			}
+		});
+		self.logger.info('[ROTARYENCODER2] events 2');
+
+	})
 	.then(_=> {
 		self.commandRouter.pushToastMessage('success',"Rotary Encoder II - successfully loaded")
 		if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStart: Plugin successfully started.');				
 		defer.resolve();				
 	})
 	.fail(error => {
-		self.logger.error('[ROTARYENCODER2] Rotary 2 not initialized: '+error);
+		self.logger.error('[ROTARYENCODER2] Rotarys not initialized: '+error);
 		defer.reject();
 	})
 
@@ -177,9 +189,9 @@ rotaryencoder2.prototype.onStop = function() {
 	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStop: Stopping Plugin.');
 
 	self.detachListener(self.fd1)
-	// .then(_=>self.detachListener(self.fd2))
-	.then(_=>removeOverlay(0))
-	// .then(_=>removeOverlay(1))
+	.then(_=>{return self.detachListener(self.fd2)})
+	.then(_=>{return self.removeOverlay(1)})
+	.then(_=>{return self.removeOverlay(0)})
 	.then(_=> {
 		socket.disconnect();
 		self.button.unwatchAll();
@@ -309,6 +321,8 @@ rotaryencoder2.prototype.setConf = function(varName, varValue) {
 rotaryencoder2.prototype.addOverlay = function (pinA, pinB, stepsPerPeriod) {
 	var self = this;
 	var defer = libQ.defer();
+
+	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] addOverlay: ' + pinA + ' ' + pinB + ' ' + stepsPerPeriod);
 	exec('/usr/bin/sudo /usr/bin/dtoverlay ' + 'rotary-encoder pin_a='+pinA+' pin_b='+pinB+' relative_axis=true steps-per-period='+stepsPerPeriod+' &', {uid: 1000, gid: 1000}, function (err, stdout, stderr) {
 		if (err) {
 			defer.reject(stderr);
@@ -322,6 +336,8 @@ rotaryencoder2.prototype.addOverlay = function (pinA, pinB, stepsPerPeriod) {
 rotaryencoder2.prototype.removeOverlay = function(idx) {
 	var self = this;
 	var defer = libQ.defer();
+	
+	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] removeOverlay: ' + idx);
 	exec('/usr/bin/sudo /usr/bin/dtoverlay -r '+idx+' &', {uid: 1000, gid: 1000}, function (err, stdout, stderr) {
 		if (err) {
 			defer.reject(stderr);
@@ -336,6 +352,8 @@ rotaryencoder2.prototype.attachListener = function (pinA){
 	var self = this;
 	var defer = libQ.defer();
 	var pinHex = Number(pinA).toString(16);
+
+	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] attachListener: ' + "/dev/input/by-path/platform-rotary\@"+pinHex+"-event");
 	var handle = spawn("cat", ["/dev/input/by-path/platform-rotary\@"+pinHex+"-event"]);
 	defer.resolve(handle);
 	return defer.promise;
@@ -344,6 +362,7 @@ rotaryencoder2.prototype.attachListener = function (pinA){
 rotaryencoder2.prototype.detachListener = function (handle){
 	var self = this;
 	var defer = libQ.defer();
+	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] detachListener: ' + handle);
 	handle.kill();
 	defer.resolve();
 	return defer.promise;
