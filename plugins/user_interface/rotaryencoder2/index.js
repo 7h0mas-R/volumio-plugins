@@ -86,6 +86,13 @@ rotaryencoder2.prototype.onStart = function() {
 	var defer=libQ.defer();
 	var activate = [];
 
+	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStart: Config loaded: ' + JSON.stringify(self.config));
+	for (let i = 0; i < maxRotaries; i++) {
+		if (self.config.get('enabled'+i)) {
+			activate.push(i);
+		}	
+	}
+
 	socket.emit('getState');
 	socket.on('pushState',function(data){
 		self.status = data;
@@ -174,9 +181,10 @@ rotaryencoder2.prototype.onStart = function() {
 		defer.resolve();				
 	})
 	.fail(error => {
-		self.logger.error('[ROTARYENCODER2] Rotarys not initialized: '+error);
+		// self.commandRouter.pushToastMessage('error',"Rotary Encoder II", self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_STOP_FAIL'))
+		self.logger.error('[ROTARYENCODER2] onStart: Rotarys not initialized: '+error);
 		defer.reject();
-	})
+	});
 
     return defer.promise;
 };
@@ -188,8 +196,8 @@ rotaryencoder2.prototype.onStop = function() {
 
 	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStop: Stopping Plugin.');
 
-	self.detachListener(self.fd1)
-	.then(_=>{return self.detachListener(self.fd2)})
+	self.detachListener(self.fd2)
+	.then(_=>{return self.detachListener(self.fd1)})
 	.then(_=>{return self.removeOverlay(1)})
 	.then(_=>{return self.removeOverlay(0)})
 	.then(_=> {
@@ -287,9 +295,108 @@ rotaryencoder2.prototype.getI18nFile = function (langCode) {
 	}
 	// return default i18n file
 	return path.join(__dirname, 'i18n', 'strings_en.json');
-  };
-  
+};
+ 
 
+rotaryencoder2.prototype.updateEncoder = function(data){
+	var self = this;
+	var defer = libQ.defer();
+	var dataString = JSON.stringify(data);
+	var overlayToRemove = -1
+
+	var rotaryIndex = parseInt(dataString.match(/rotaryType([0-9])/)[1]);
+	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] updateEncoder: Rotary'+(rotaryIndex + 1)+'with:' + JSON.stringify(data));
+
+	self.sanityCheckSettings(rotaryIndex, data)
+	.then(_ => {
+		if (self.debugLogging) self.logger.info('[ROTARYENCODER2] updateEncoder: Changing Encoder '+(rotaryIndex + 1)+' Settings to new values');
+		if (data['enabled'+rotaryIndex]==true) {
+			self.config.set('rotaryType'+rotaryIndex, (data['rotaryType'+rotaryIndex].value));
+			self.config.set('pinA'+rotaryIndex, (data['pinA'+rotaryIndex]));
+			self.config.set('pinB'+rotaryIndex, (data['pinB'+rotaryIndex]));
+			self.config.set('dialAction'+rotaryIndex, (data['dialAction'+rotaryIndex].value));
+			self.config.set('socketCmdCCW'+rotaryIndex, (data['socketCmdCCW'+rotaryIndex]));
+			self.config.set('socketDataCCW'+rotaryIndex, (data['socketDataCCW'+rotaryIndex]));
+			self.config.set('socketCmdCW'+rotaryIndex, (data['socketCmdCW'+rotaryIndex]));
+			self.config.set('socketDataCW'+rotaryIndex, (data['socketDataCW'+rotaryIndex]));
+			self.config.set('pinPush'+rotaryIndex, (data['pinPush'+rotaryIndex]));
+			self.config.set('pinPushDebounce'+rotaryIndex, (data['pinPushDebounce'+rotaryIndex]));
+			self.config.set('pushState'+rotaryIndex,(data['pushState'+rotaryIndex]))
+			self.config.set('pushAction'+rotaryIndex, (data['pushAction'+rotaryIndex].value));
+			self.config.set('socketCmdPush'+rotaryIndex, (data['socketCmdPush'+rotaryIndex]));
+			self.config.set('socketDataPush'+rotaryIndex, (data['socketDataPush'+rotaryIndex]));
+			self.config.set('longPushAction'+rotaryIndex, (data['longPushAction'+rotaryIndex].value));
+			self.config.set('socketCmdLongPush'+rotaryIndex, (data['socketCmdLongPush'+rotaryIndex]));
+			self.config.set('socketDataLongPush'+rotaryIndex, (data['socketDataLongPush'+rotaryIndex]));
+			self.config.set('enabled'+rotaryIndex, true);	
+		} else {
+			self.config.set('enabled'+rotaryIndex, false);	
+		}
+	})
+	.then(_ => {
+		self.commandRouter.pushToastMessage('success', self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_SAVE_SUCCESS'), self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_MSG_SAVE')+ (rotaryIndex + 1));
+		defer.resolve();	
+	})
+	.fail(err => {
+		self.commandRouter.pushToastMessage('error', self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_SAVE_FAIL'), self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_MSG_SAVE')+ (rotaryIndex + 1));
+		defer.reject(err);
+	})
+	return defer.promise;
+
+}
+
+rotaryencoder2.prototype.sanityCheckSettings = function(rotaryIndex, data){
+	var self = this;
+	var defer = libQ.defer();
+	var newPins = [];
+	var otherPins = [];
+	var allPins = [];
+
+	// First check if the settings make sense for themselves
+	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] sanityCheckSettings: Rotary'+(rotaryIndex + 1)+' for:' + JSON.stringify(data));
+
+	if (data['enabled'+rotaryIndex] == false) {
+		if (self.config.get('enabled'+rotaryIndex) == true) {
+			if (self.debugLogging) self.logger.info('[ROTARYENCODER2] sanityCheckSettings: Disabling rotary ' + (rotaryIndex+1) +' is OK.' );
+			defer.resolve();	
+		} else {
+			if (self.debugLogging) self.logger.info('[ROTARYENCODER2] sanityCheckSettings: Rotary ' + (rotaryIndex+1) +' was already disabled, nothing to do.' );
+			defer.resolve();	
+		} 
+	} else {
+		//check if integer
+		if (!Number.isInteger(parseInt(data['pinA'+rotaryIndex])) || !Number.isInteger(parseInt(data['pinB'+rotaryIndex])) || !Number.isInteger(parseInt(data['pinPush'+rotaryIndex]))) {
+			self.commandRouter.pushToastMessage('error', self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_WRONG_PARAMETER'), self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_NEEDS_INTEGER'));
+			defer.reject('Pin value must be integer.');
+		} else {
+			newPins = [parseInt(data['pinA'+rotaryIndex]),parseInt(data['pinB'+rotaryIndex]),parseInt(data['pinPush'+rotaryIndex])];
+			for (let i = 0; i < maxRotaries; i++) {
+				if ((!i==rotaryIndex) && (this.config.get('enabled'+i))) {
+					otherPins.push(parseInt(this.config.get('pinA'+i)));
+					otherPins.push(parseInt(this.config.get('pinB'+i)));
+					otherPins.push(parseInt(this.config.get('pinPush'+i)));
+				}
+			}
+			//check if duplicate number used
+			if (newPins.some((item,index) => newPins.indexOf(item) != index)) {
+				self.commandRouter.pushToastMessage('error', self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_WRONG_PARAMETER'), self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_PINS_DIFFERENT'));
+				self.logger.error('[ROTARYENCODER2] sanityCheckSettings: duplicate pins. new: ' + newPins );
+				defer.reject('Duplicate pin numbers provided.');
+			} else {
+				//check if any of the numbers used is also used in another active rotary
+				allPins = [...otherPins, ...newPins];
+				if (allPins.some((item,index) => allPins.indexOf(item) != index)) {
+					self.commandRouter.pushToastMessage('error', self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_WRONG_PARAMETER'), self.commandRouter.getI18nString('ROTARYENCODER2.TOAST_PINS_BLOCKED'));
+					self.logger.error('[ROTARYENCODER2] sanityCheckSettings: Pin(s) used in other rotary already.');
+					defer.reject('One or more pins already used in other rotary.')
+				} else {
+					defer.resolve('pass');	
+				}		
+			}
+		}				
+	}
+	return defer.promise;
+}
 
 
 rotaryencoder2.prototype.updateDebugSettings = function (data) {
@@ -342,7 +449,11 @@ rotaryencoder2.prototype.removeOverlay = function(idx) {
 		if (err) {
 			defer.reject(stderr);
 		} else {
-			defer.resolve(stdout);
+			if (self.debugLogging) self.logger.info('[ROTARYENCODER2] removeOverlay: ' + idx + ' returned: ' + stdout);
+			exec('/usr/bin/sudo /usr/bin/dtoverlay -l', {uid: 1000, gid: 1000}, function (err, stdout, stderr) {
+				if (self.debugLogging) self.logger.info('[ROTARYENCODER2] overlay -l: ' + idx + ' returned: ' + stdout + stderr);
+				defer.resolve(stdout);			
+			})
 		}
 	})           
 	return defer.promise;
