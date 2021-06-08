@@ -73,8 +73,7 @@ rotaryencoder2.prototype.onVolumioStart = function()
 	this.config.loadFile(configFile);
 
 	self.debugLogging = (self.config.get('logging')==true);
-	self.inputs=[].fill(null,0,maxRotaries);
-	self.events=[].fill(null,0,maxRotaries);
+	self.handles=[].fill(null,0,maxRotaries);
 	self.buttons=[].fill(null,0,maxRotaries);
 	self.pushDownTime=[].fill(0,0,maxRotaries);
 	self.status=null;
@@ -107,38 +106,7 @@ rotaryencoder2.prototype.onStart = function() {
 		self.logger.info('[ROTARYENCODER2] buttons not initialized');
 	}
 
-	self.addOverlay(17,27,2)
-	.then(_=>{
-		return self.attachListener(17);
-		self.logger.info('[ROTARYENCODER2] attached 1');
-	})
-	.then(handle => {
-		self.fd1=handle;
-		self.fd1.stdout.on("data", function (chunk) {
-			var i=0,got=0
-			while (chunk.length - i >= 16) {
-				var s = chunk.readUInt32LE(i+0)
-				var us = chunk.readUInt32LE(i+4)
-				var type = chunk.readUInt16LE(i+8)
-				var code = chunk.readUInt16LE(i+10)
-				var value = chunk.readInt32LE(i+12)
-				i += 16
-				if (type == 2) {
-					switch (value) {
-						case 1:
-							socket.emit('next');
-							break;
-						case -1:
-							socket.emit('prev');
-							break;
-						default:
-							break;
-					}
-				} 
-			}
-		});
-		self.logger.info('[ROTARYENCODER2] events 1');
-	})
+	self.activateRotaries([1])
 	.then(_=> {
 		return self.addOverlay(24,23,2);
 		self.logger.info('[ROTARYENCODER2] added 2');
@@ -197,7 +165,7 @@ rotaryencoder2.prototype.onStop = function() {
 	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStop: Stopping Plugin.');
 
 	self.detachListener(self.fd2)
-	.then(_=>{return self.detachListener(self.fd1)})
+	.then(_=>{return self.detachListener(self.handles[1])})
 	.then(_=>{return self.removeOverlay(1)})
 	.then(_=>{return self.removeOverlay(0)})
 	.then(_=> {
@@ -297,7 +265,7 @@ rotaryencoder2.prototype.getI18nFile = function (langCode) {
 	return path.join(__dirname, 'i18n', 'strings_en.json');
 };
  
-
+//Gets called when user saves settings from the GUI
 rotaryencoder2.prototype.updateEncoder = function(data){
 	var self = this;
 	var defer = libQ.defer();
@@ -345,6 +313,7 @@ rotaryencoder2.prototype.updateEncoder = function(data){
 
 }
 
+//Checks if the user settings in the GUI make sense
 rotaryencoder2.prototype.sanityCheckSettings = function(rotaryIndex, data){
 	var self = this;
 	var defer = libQ.defer();
@@ -398,7 +367,7 @@ rotaryencoder2.prototype.sanityCheckSettings = function(rotaryIndex, data){
 	return defer.promise;
 }
 
-
+//Gets called when user changes and saves debug settings
 rotaryencoder2.prototype.updateDebugSettings = function (data) {
 	var self = this;
 	var defer = libQ.defer();
@@ -424,6 +393,118 @@ rotaryencoder2.prototype.setConf = function(varName, varValue) {
 	var self = this;
 	//Perform your installation tasks here
 };
+
+//Function to recursively activate all rotaries that are passed by Index in an Array
+rotaryencoder2.prototype.activateRotaries = function (rotaryIndexArray) {
+	var self = this;
+	var defer = libQ.defer();
+	var rotaryIndex;
+
+	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] activateRotaries: ' + rotaryIndexArray);
+
+	if (Array.isArray(rotaryIndexArray)){
+		if (rotaryIndexArray.length > 0) {
+			rotaryIndex = rotaryIndexArray[rotaryIndexArray.length - 1];
+			self.activateRotaries(rotaryIndexArray.slice(0,rotaryIndexArray.length - 1))
+			.then(_=> {
+				return self.addOverlay(self.config.get('pinA'+rotaryIndex),self.config.get('pinB'+rotaryIndex),self.config.get('rotaryType'+rotaryIndex))
+				.then(_=>{
+					return self.attachListener(self.config.get('pinA'+rotaryIndex));
+				})
+				.then(handle => {
+					self.addEventHandle(handle, rotaryIndex)
+				})		
+			})
+			.then(_=>{
+				defer.resolve();
+			})
+		} else {
+			if (self.debugLogging) self.logger.info('[ROTARYENCODER2] activateRotaries: end of recursion.');
+			defer.resolve();
+		}
+	} else {
+		self.logger.error('[ROTARYENCODER2] activateRotaries: rotaryIndexArray must be an Array');
+		defer.reject('rotaryIndexArray must be an Array of integers')
+	} 
+
+	return defer.promise;
+}
+
+rotaryencoder2.prototype.addEventHandle = function (handle, rotaryIndex) {
+	var self = this; 
+
+	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] addEventHandle for rotary: ' + (rotaryIndex + 1));
+
+	self.handles[rotaryIndex]=handle;
+	self.handles[rotaryIndex].stdout.on("data", function (chunk) {
+		var i=0;
+		while (chunk.length - i >= 16) {
+			var type = chunk.readUInt16LE(i+8)
+			var value = chunk.readInt32LE(i+12)
+			i += 16
+			if (type == 2) {
+				if (self.debugLogging) self.logger.info('[ROTARYENCODER2] addEventHandle received from rotary: '+(rotaryIndex +1) + ' -> Dir: '+value)
+				self.emitCommand(value,rotaryIndex)
+			} 
+		}
+	});
+
+}
+
+rotaryencoder2.prototype.emitCommand = function(value,rotaryIndex){
+	var self = this;
+	var action = self.config.get('dialAction'+rotaryIndex)
+	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] emitCommand: '+action + ' with value ' + value + 'for Rotary: '+(rotaryIndex + 1))
+
+	switch (value) {
+		case 1:
+			switch (action) {
+				case 1: //volume
+					socket.emit('volume','+');					
+					break;
+			
+				case 2: //skip
+					socket.emit('next');				
+					break;
+			
+				case 3: //seek
+					
+					break;
+			
+				case 4: //emit
+					socket.emit(self.config.get('socketCmdCW'+rotaryIndex), self.config.get('socketDataCW'+rotaryIndex));				
+					break;
+			
+				default:
+					break;
+			}
+			break;
+		case -1: //CCW
+			switch (action) {
+				case 1: //volume
+					socket.emit('volume','-');					
+					break;
+			
+				case 2: //skip
+					socket.emit('prev');				
+					break;
+			
+				case 3: //seek
+					
+					break;
+			
+				case 4: //emit
+					socket.emit(self.config.get('socketCmdCCW'+rotaryIndex), self.config.get('socketDataCCW'+rotaryIndex));				
+					break;
+			
+				default:
+					break;
+			}
+			break;
+		default:
+			break;
+	}
+}
 
 rotaryencoder2.prototype.addOverlay = function (pinA, pinB, stepsPerPeriod) {
 	var self = this;
