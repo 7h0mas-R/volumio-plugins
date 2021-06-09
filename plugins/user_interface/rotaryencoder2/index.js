@@ -106,43 +106,7 @@ rotaryencoder2.prototype.onStart = function() {
 		self.logger.info('[ROTARYENCODER2] buttons not initialized');
 	}
 
-	self.activateRotaries([1])
-	.then(_=> {
-		return self.addOverlay(24,23,2);
-		self.logger.info('[ROTARYENCODER2] added 2');
-	})
-	.then(_=> {
-		return self.attachListener(24)
-		self.logger.info('[ROTARYENCODER2] attached 2');
-	})
-	.then(handle => {
-		self.fd2 = handle;	
-		self.fd2.stdout.on("data", function (chunk) {
-			var i=0,got=0
-			while (chunk.length - i >= 16) {
-				var s = chunk.readUInt32LE(i+0)
-				var us = chunk.readUInt32LE(i+4)
-				var type = chunk.readUInt16LE(i+8)
-				var code = chunk.readUInt16LE(i+10)
-				var value = chunk.readInt32LE(i+12)
-				i += 16
-				if (type == 2) {
-					switch (value) {
-						case 1:
-							socket.emit('volume','+');
-							break;
-						case -1:
-							socket.emit('volume','-');
-							break;
-						default:
-							break;
-					}
-				} 
-			}
-		});
-		self.logger.info('[ROTARYENCODER2] events 2');
-
-	})
+	self.activateRotaries([0,1])
 	.then(_=> {
 		self.commandRouter.pushToastMessage('success',"Rotary Encoder II - successfully loaded")
 		if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStart: Plugin successfully started.');				
@@ -163,11 +127,13 @@ rotaryencoder2.prototype.onStop = function() {
 	var deactivate=[];
 
 	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] onStop: Stopping Plugin.');
+	for (let i = 0; i < maxRotaries; i++) {
+		if (self.config.get('enabled'+i)) {
+			deactivate.push(i);
+		}	
+	}
 
-	self.detachListener(self.fd2)
-	.then(_=>{return self.detachListener(self.handles[1])})
-	.then(_=>{return self.removeOverlay(1)})
-	.then(_=>{return self.removeOverlay(0)})
+	self.deactivateRotaries(deactivate)
 	.then(_=> {
 		socket.disconnect();
 		self.button.unwatchAll();
@@ -430,6 +396,35 @@ rotaryencoder2.prototype.activateRotaries = function (rotaryIndexArray) {
 	return defer.promise;
 }
 
+//Function to recursively deactivate all rotaries that are passed by Index in an Array
+rotaryencoder2.prototype.deactivateRotaries = function (rotaryIndexArray) {
+	var self = this;
+	var defer = libQ.defer();
+	var rotaryIndex;
+
+	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] deactivateRotaries: ' + rotaryIndexArray);
+
+	if (Array.isArray(rotaryIndexArray)){
+		if (rotaryIndexArray.length > 0) {
+			rotaryIndex = rotaryIndexArray[0];
+			self.deactivateRotaries(rotaryIndexArray.slice(1,rotaryIndexArray.length))
+			.then(_=> {return self.detachListener(self.handles[rotaryIndex])})
+			.then(_=>{ return self.checkOverlayExists(rotaryIndex)})
+			.then(idx=>{return self.removeOverlay(idx)})
+			.then(_=>{
+				if (self.debugLogging) self.logger.info('[ROTARYENCODER2] deactivateRotaries: deactivated rotary' + (rotaryIndex + 1));
+				defer.resolve();
+			})
+		} else {
+			if (self.debugLogging) self.logger.info('[ROTARYENCODER2] deactivateRotaries: end of recursion.');
+			defer.resolve();
+		}
+	} else {
+		self.logger.error('[ROTARYENCODER2] deactivateRotaries: rotaryIndexArray must be an Array');
+		defer.reject('rotaryIndexArray must be an Array of integers')
+	} 
+	return defer.promise;
+}
 rotaryencoder2.prototype.addEventHandle = function (handle, rotaryIndex) {
 	var self = this; 
 
@@ -526,17 +521,57 @@ rotaryencoder2.prototype.removeOverlay = function(idx) {
 	var defer = libQ.defer();
 	
 	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] removeOverlay: ' + idx);
-	exec('/usr/bin/sudo /usr/bin/dtoverlay -r '+idx+' &', {uid: 1000, gid: 1000}, function (err, stdout, stderr) {
-		if (err) {
-			defer.reject(stderr);
-		} else {
-			if (self.debugLogging) self.logger.info('[ROTARYENCODER2] removeOverlay: ' + idx + ' returned: ' + stdout);
-			exec('/usr/bin/sudo /usr/bin/dtoverlay -l', {uid: 1000, gid: 1000}, function (err, stdout, stderr) {
-				if (self.debugLogging) self.logger.info('[ROTARYENCODER2] overlay -l: ' + idx + ' returned: ' + stdout + stderr);
-				defer.resolve(stdout);			
-			})
+	if (idx > -1) {
+		exec('/usr/bin/sudo /usr/bin/dtoverlay -r '+idx+' &', {uid: 1000, gid: 1000}, function (err, stdout, stderr) {
+			if (err) {
+				defer.reject(stderr);
+			} else {
+				if (self.debugLogging) self.logger.info('[ROTARYENCODER2] removeOverlay: ' + idx + ' returned: ' + stdout);
+				exec('/usr/bin/sudo /usr/bin/dtoverlay -l', {uid: 1000, gid: 1000}, function (err, stdout, stderr) {
+					if (self.debugLogging) self.logger.info('[ROTARYENCODER2] removeOverlay: "overlay -l" returned: ' + stdout + stderr);
+					defer.resolve(stdout);			
+				})
+			}
+		})           	
+	} else {
+		defer.resolve();
+	}
+	return defer.promise;
+}
+
+/**
+ * Function looks for rotary-encoder overlays that alread use one of the provided GPIOs.
+ * It returns an array with the index numbers of the overlay list returned by "dtoverlay -l"
+ * If no matches are found, the returned array is empty
+ * @param {Number} pin_a 
+ * @param {Number} pin_b 
+ * @returns Array
+ */
+ rotaryencoder2.prototype.checkOverlayExists = function(rotaryIndex) {
+	var self = this;
+	var defer = libQ.defer();
+    var match;
+    var overlay = -1;
+
+	if (self.debugLogging) self.logger.info('[ROTARYENCODER2] checkOverlayExists: Checking for existing overlays for Rotary: ' + (rotaryIndex + 1));
+	var pin_a = self.config.get('pinA' + rotaryIndex);
+	var pin_b = self.config.get('pinB'+rotaryIndex);
+    exec('/usr/bin/sudo /usr/bin/dtoverlay -l', {uid: 1000, gid: 1000}, function (err, stdout, stderr) {
+        if(err) {
+			self.logger.error('[ROTARYENCODER2] checkOverlayExists: Could not execute "dtoverlays -l": ' + stderr);
+			defer.reject();
 		}
-	})           
+		if (self.debugLogging) self.logger.info('[ROTARYENCODER2] checkOverlayExists: check pinA=' + pin_a + 'pinB=' + pin_b + ' in ' + stdout);
+		dtoverlayRegex.lastIndex = 0;
+		while (match = dtoverlayRegex.exec(stdout)) {
+			if ((pin_a == match[2]) && (pin_b == match[3]))  {
+				if (self.debugLogging) self.logger.info('[ROTARYENCODER2] checkOverlayExists: rotary ' + (rotaryIndex + 1) + 'uses overlay ' + match[1]);
+				overlay = match[1];
+				defer.resolve(overlay);
+				break;
+			}             
+		}
+    });
 	return defer.promise;
 }
 
