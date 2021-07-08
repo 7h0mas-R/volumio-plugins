@@ -1,0 +1,985 @@
+{
+	"categories": [
+		{
+			"prettyName": "Music Services",
+			"name": "music_service",
+			"id": "cat1",
+			"description": "Plugins for Adding Music Sources to Volumio",
+			"plugins": [
+				{
+					"prettyName": "Spotify",
+					"icon": "fa-spotify",
+					"name": "spop",
+					"version": "2.0.3",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/spop/spop.zip",
+					"license": "Free for non commercial USE",
+					"description": "Spotify plugin for Volumio2",
+					"details": "<h4>Spotify Plugin for Volumio</h4><br>Adds Spotify Playback capabilites to Volumio<br>Features:<br><ul><li>Playlists</li></ul><br><strong>Note:</strong> Requires Spotify premium account.",
+					"author": "Volumio Team",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "24-1-2021",
+					"stable": true
+				},
+				{
+					"prettyName": "Volumio Spotify Connect2",
+					"icon": "fa-spotify",
+					"name": "volspotconnect2",
+					"version": "1.0.5",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/volspotconnect2/volspotconnect2.zip",
+					"license": "GPL 3.0",
+					"description": "Plugin for Spotify connect in Volumio2. Requires a Premium/Family account",
+					"details": "Spotify Connect for Volumio",
+					"author": "Balbuze & Ashthespy",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "7-10-2020",
+					"stable": true
+				},
+				{
+					"prettyName": "Squeezelite player",
+					"icon": "fa fa-music",
+					"name": "squeezelite",
+					"version": "1.1.1",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/squeezelite/squeezelite.zip",
+					"license": "GPL-3.0",
+					"description": "Installs the Squeezelite player you can use in combination with the Logitech Media Server",
+					"details": "Squeezelite plugin for Volumio",
+					"author": "Saiyato",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "20-11-2018",
+					"stable": true
+				},
+				{
+					"prettyName": "Logitech Media Server",
+					"icon": "fa-lightbulb-o",
+					"name": "lms",
+					"version": "1.0.15",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/lms/lms.zip",
+					"license": "GPL-3.0",
+					"description": "Installs the Logitech Media Server application and web client",
+					"details": "Logitech Media Server (LMS) Plugin for Volumio",
+					"author": "Saiyato",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "1-5-2019",
+					"stable": true
+				},
+				{
+					"prettyName": "Personal Radio",
+					"icon": "fa-headphones",
+					"name": "personal_radio",
+					"version": "1.1.5",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/personal_radio/personal_radio.zip",
+					"license": "ISC",
+					"description": "Personal Radio Plugin for Volumio2 (KBS,MBC,SBS Korean Radios & Linn)",
+					"details": "KBS(Korean Broadcasting System), MBC(Munhwa Broadcasting Corporation), Linn Radio plugin for Volumio",
+					"author": "Chris Song <ckchrisong@gmail.com>",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "30-3-2019",
+					"stable": true
+				},
+				{
+					"prettyName": "Radio Paradise",
+					"icon": "fa-headphones",
+					"name": "radio_paradise",
+					"version": "1.1.5",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/radio_paradise/radio_paradise.zip",
+					"license": "ISC",
+					"description": "Radio Paradise Plugin for Volumio2 (incl. FLAC versions)",
+					"details": "The plugin adds Radio Paradise as a music service. It offers streams with different quality, including a lossless Flac option.",
+					"author": "marco79cgn",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "13-11-2020",
+					"stable": true
+				},
+				{
+					"prettyName": "Podcast",
+					"icon": "fa-podcast",
+					"name": "podcast",
+					"version": "0.3.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/podcast/podcast.zip",
+					"license": "ISC",
+					"description": "Podcast for Volumio2",
+					"details": "",
+					"author": "Chris Song",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "11-9-2020",
+					"stable": true
+				},
+				{
+					"prettyName": "Phish.in",
+					"icon": "fa-lightbulb-o",
+					"name": "volumio-phishin",
+					"version": "1.0.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/volumio-phishin/volumio-phishin.zip",
+					"license": "ISC",
+					"description": "A Phish.in plugin for Volumio2. Play over 1,500 live Phish audience recordings from Phish.in..  Phish.in and the Volumio Phish.in music service plugin complies with Phish's official taping policy as described at http://phish.com/#/faq/taping-guidelines.",
+					"details": "A Phish.in plugin for Volumio2. Play over 1,500 live Phish audience recordings from Phish.in. Phish.in and the Volumio Phish.in music service plugin complies with Phish's official taping policy as described at http://phish.com/#/faq/taping-guidelines.",
+					"author": "Noah McGee (lostmyshape)",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "4-8-2018",
+					"stable": true
+				},
+				{
+					"prettyName": "Onedrive Music Library",
+					"icon": "fa-lightbulb-o",
+					"name": "onedrive_music_library",
+					"version": "1.0.3",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/onedrive_music_library/onedrive_music_library.zip",
+					"license": "ISC",
+					"description": "Allows to play music stored on Onedrive cloud storage service. Note that this is a beta version with limited functionality. Most prominently this version does not yet support adding music files to playlists or queue.",
+					"details": "",
+					"author": "Elmar Jansen",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "20-11-2018"
+				},
+				{
+					"prettyName": "Pandora",
+					"icon": "fa-lightbulb-o",
+					"name": "pandora",
+					"version": "2.9.2",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/pandora/pandora.zip",
+					"license": "ISC",
+					"description": "A plugin to access Pandora Web Radio",
+					"details": "",
+					"author": "truckershitch",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "28-6-2021",
+					"stable": true
+				},
+				{
+					"prettyName": "Volusonic",
+					"icon": "fa-ship",
+					"name": "volusonic",
+					"version": "1.2.3",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/volusonic/volusonic.zip",
+					"license": "ISC",
+					"description": "Subsonic for Volumio. Allows any subsonic API (1.10.2 minimum, full features >=1.14.0) capable server (subsonic / airsonic / ampache / owncloud / nextcloud / etc..) to be used as a backend for Volumio",
+					"details": "Subsonic Plugin For Volumio",
+					"author": "foobarjo",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "2-2-2021",
+					"stable": true
+				},
+				{
+					"prettyName": "Roon Bridge",
+					"icon": "fa-lightbulb-o",
+					"name": "RoonBridge",
+					"version": "1.0.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/RoonBridge/RoonBridge.zip",
+					"license": "ISC",
+					"description": "Stream music from Roon to Volumio",
+					"details": "Roon Bridge plugin for Volumio. Turn your Volumio device into a Roon Networked endpoint.",
+					"author": "Christopher Rieke",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "23-4-2020",
+					"stable": true
+				},
+				{
+					"prettyName": "Nanosound CD",
+					"icon": "fa-lightbulb-o",
+					"name": "nanosound_cd",
+					"version": "1.2.3",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/nanosound_cd/nanosound_cd.zip",
+					"license": "ISC",
+					"description": "Nanosound CD playback and extraction plug-in by Nanomesher",
+					"details": "",
+					"author": "Nanomesher",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "15-4-2021"
+				},
+				{
+					"prettyName": "Radio Nowy Swiat",
+					"icon": "fa-lightbulb-o",
+					"name": "nowyswiat",
+					"version": "1.0.3",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/nowyswiat/nowyswiat.zip",
+					"license": "ISC",
+					"description": "Radio Nowy Swiat",
+					"details": "Radio Nowy Swiat",
+					"author": "DJack",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "25-11-2020"
+				},
+				{
+					"prettyName": "SWARM Station",
+					"icon": "fa-lightbulb-o",
+					"name": "swarmstation",
+					"version": "1.0.1",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/swarmstation/swarmstation.zip",
+					"license": "ISC",
+					"description": "Swarmstation space drone",
+					"details": "",
+					"author": "DJack",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "21-12-2020"
+				},
+				{
+					"prettyName": "RADIO 357",
+					"icon": "fa-lightbulb-o",
+					"name": "rad357pl",
+					"version": "1.0.1",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/rad357pl/rad357pl.zip",
+					"license": "ISC",
+					"description": "Radio 357",
+					"details": "",
+					"author": "DJack",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "7-1-2021"
+				},
+				{
+					"prettyName": "Hotelradio.fm",
+					"icon": "fa-lightbulb-o",
+					"name": "hotelradio",
+					"version": "1.0.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/hotelradio/hotelradio.zip",
+					"license": "ISC",
+					"description": "hotelradio.fm plugin for Volumio. With hotelradio.fm, you get over 80 premium music channels into your home, with always new titles and of course without advertising interruption.",
+					"details": "",
+					"author": "Volumio Team",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "25-1-2021",
+					"stable": true
+				},
+				{
+					"prettyName": "80s80s Radio",
+					"icon": "fa-lightbulb-o",
+					"name": "80s80s",
+					"version": "1.0.2",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/80s80s/80s80s.zip",
+					"license": "ISC",
+					"description": "80s80s Radio Plugin for Volumio2",
+					"details": "",
+					"author": "marco79cgn",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "15-5-2021"
+				}
+			]
+		},
+		{
+			"prettyName": "Miscellanea",
+			"name": "miscellanea",
+			"id": "cat2",
+			"description": "Things that cannot go in other categories",
+			"plugins": [
+				{
+					"prettyName": "Touch Display",
+					"icon": "fa-hand-pointer-o",
+					"name": "touch_display",
+					"version": "1.3.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/touch_display/touch_display.zip",
+					"license": "Free for non commercial USE",
+					"description": "The plugin enables the touch display controller for the original Raspberry 7\" touchscreen.",
+					"details": "<strong>Using this plugin is not recommended with Raspberry PI B+! Suggested, Raspberry PI 3, Odroid C1 or C2</strong>",
+					"author": "Volumio Team",
+					"screenshots": [],
+					"updated": "5-4-2021"
+				},
+				{
+					"prettyName": "Allo Relay Volume Attenuator",
+					"icon": "fa-lightbulb-o",
+					"name": "allo_relay_volume_attenuator",
+					"version": "1.3.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/allo_relay_volume_attenuator/allo_relay_volume_attenuator.zip",
+					"license": "ISC",
+					"description": "This plugin enables Allo's Relay Volume Attenuator",
+					"details": "This plugin allows to change Volume trough Allo Relay Attenuator board, which ensures bit-perfect volume control",
+					"author": "Volumio Team",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "10-10-2017"
+				},
+				{
+					"prettyName": "FritzCallMute",
+					"icon": "fa-phone",
+					"name": "fritzcallmute",
+					"version": "1.0.1",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/fritzcallmute/fritzcallmute.zip",
+					"license": "ISC",
+					"description": "Mutes on phone calls via FritzBox router",
+					"details": "The germany polular router FritzBox has a build in callmonitor. This plugin pauses playing if callmonitor signals an incoming call. After hangup playing is resumed. ",
+					"author": "clmtrapp",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "12-3-2018",
+					"stable": true
+				},
+				{
+					"prettyName": "Amplifier Switch",
+					"icon": "fa-power-off",
+					"name": "ampswitch",
+					"version": "0.1.2",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/ampswitch/ampswitch.zip",
+					"license": "ISC",
+					"description": "Status based power management of external amplifier",
+					"details": "This plugin allows the control of a power amplifier via GPIOs, to turn it on and off based on Volumio playback status",
+					"author": "Tim Lange",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "6-9-2020"
+				},
+				{
+					"prettyName": "LastFM Scrobbler",
+					"icon": "fa-lastfm",
+					"name": "lastfm",
+					"version": "1.3.4",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/lastfm/lastfm.zip",
+					"license": "GPL-3.0",
+					"description": "Installs a LastFM scrobbler which uses the Volumio artist and track info (doesn't work with librespot).",
+					"details": "This plugin enables lastFM scrobbling",
+					"author": "Saiyato",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "19-12-2019",
+					"stable": true
+				},
+				{
+					"prettyName": "Kodi Krypton",
+					"icon": "fa fa-tv",
+					"name": "kodi",
+					"version": "2.2.13",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/kodi/kodi.zip",
+					"license": "",
+					"description": "Installs Kodi Krypton on top of Volumio.",
+					"details": "",
+					"author": "Saiyato",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "19-3-2019"
+				},
+				{
+					"prettyName": "RemotePi",
+					"icon": "fa-power-off",
+					"name": "remotepi",
+					"version": "1.1.7",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/remotepi/remotepi.zip",
+					"license": "",
+					"description": "The plugin enables support for the RemotePi board.",
+					"details": "",
+					"author": "gvolt",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "7-4-2021"
+				},
+				{
+					"prettyName": "AutoStart",
+					"icon": "fa-play-circle-o",
+					"name": "autostart",
+					"version": "1.1.2",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/autostart/autostart.zip",
+					"license": "ISC",
+					"description": "This plugin starts the first entry in the queue or from the last played position after rebooting volumio.",
+					"details": "",
+					"author": "Thomas Doerr",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "8-11-2018"
+				},
+				{
+					"prettyName": "Volumio Onkyo Control",
+					"icon": "fa-lightbulb-o",
+					"name": "onkyo_control",
+					"version": "1.0.2",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/onkyo_control/onkyo_control.zip",
+					"license": "ISC",
+					"description": "Turn Onkyo amplifier on the network on and off when playback begins and ends",
+					"details": "",
+					"author": "Ben Mitchell",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "20-11-2018"
+				},
+				{
+					"prettyName": "Autoplay",
+					"icon": "fa-play-circle-o ",
+					"name": "auto_play",
+					"version": "1.0.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/auto_play/auto_play.zip",
+					"description": "Autoplay plugin - Enable this plugin in order to let volumio start playing the last entry in the queue after a reboot.",
+					"details": "",
+					"author": "Thomas Doerr",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "16-11-2018"
+				},
+				{
+					"prettyName": "NanoSound by Nanomesher",
+					"icon": "fa-lightbulb-o",
+					"name": "nanosound",
+					"version": "1.8.6",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/nanosound/nanosound.zip",
+					"license": "ISC",
+					"description": "Companion plugin for NanoSound DAC",
+					"details": "",
+					"author": "Nanomesher",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "27-2-2021"
+				},
+				{
+					"prettyName": "SnapCast",
+					"icon": "fa-lightbulb-o",
+					"name": "snapcast",
+					"version": "2.4.3",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/snapcast/snapcast.zip",
+					"license": "GPL-3.0",
+					"description": "SnapCast integration pack",
+					"details": "Add snapcast features to Volumio",
+					"author": "Saiyato",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "10-10-2019"
+				},
+				{
+					"prettyName": "tradfri",
+					"icon": "fa-lightbulb-o",
+					"name": "tradfri",
+					"version": "1.0.3",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/tradfri/tradfri.zip",
+					"license": "ISC",
+					"description": "Switch Tradfri devices on/off based on the Volumio player state.",
+					"details": "IKEA Tradfri Gateway connect",
+					"author": "Rene Schuenemann",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "28-6-2021",
+					"stable": true
+				},
+				{
+					"prettyName": "miniDLNA",
+					"icon": "fa-server",
+					"name": "minidlna",
+					"version": "1.1.7",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/minidlna/minidlna.zip",
+					"license": "ISC",
+					"description": "The plugin installs and configures a miniDLNA server.",
+					"details": "",
+					"author": "gvolt",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "10-5-2021",
+					"stable": true
+				},
+				{
+					"prettyName": "System information",
+					"icon": "fa-info-circle",
+					"name": "Systeminfo",
+					"version": "0.1.6",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/Systeminfo/Systeminfo.zip",
+					"license": "",
+					"description": "Information about your system",
+					"details": "Gives information about your system",
+					"author": "Balbuze",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "2-4-2021",
+					"stable": true
+				},
+				{
+					"prettyName": "Virtual Keyboard",
+					"icon": "fa-keyboard-o",
+					"name": "virtual_keyboard",
+					"version": "1.0.4",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/virtual_keyboard/virtual_keyboard.zip",
+					"license": "ISC",
+					"description": "The plugin installs a virtual keyboard. It requires the Touch Display plugin to be installed.",
+					"details": "Virtual keyboard for Touch Display plugin",
+					"author": "gvolt",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "22-9-2020"
+				},
+				{
+					"prettyName": "NanoSound One",
+					"icon": "fa-lightbulb-o",
+					"name": "nanosoundone",
+					"version": "1.0.1",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/nanosoundone/nanosoundone.zip",
+					"license": "ISC",
+					"description": "Companion plugin for NanoSound One",
+					"details": "",
+					"author": "Nanomesher",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "23-2-2021"
+				},
+				{
+					"prettyName": "Cisco DUO",
+					"icon": "fa-shield",
+					"name": "duo",
+					"version": "1.2.5",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/duo/duo.zip",
+					"license": "GNUv2",
+					"description": "Duo Unix with Pluggable Authentication Modules (PAM) support, provides a secure and customizable method for protecting Unix and Linux logins. Pre-compiled package for 32-bit ARM and x86 machines.",
+					"details": "DUO authenticating SSH sessions",
+					"author": "Saiyato",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "5-10-2020"
+				},
+				{
+					"prettyName": "pirateaudio",
+					"icon": "fa-lightbulb-o",
+					"name": "pirateaudio",
+					"version": "0.0.4",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/pirateaudio/pirateaudio.zip",
+					"license": "ISC",
+					"description": "Volumio plugin to use pirate audio DAC (including display and the 4 buttons) on raspberry pi.",
+					"details": "",
+					"author": "AxLED",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "7-3-2021"
+				},
+				{
+					"prettyName": "Philips amBX",
+					"icon": "fa-lightbulb-o",
+					"name": "ambx",
+					"version": "1.0.2",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/ambx/ambx.zip",
+					"license": "BSD-3-Clause",
+					"description": "A rudimentary controller for the Philips amBX sound system.",
+					"details": "",
+					"author": "Jan Siegmund",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "24-5-2021"
+				},
+				{
+					"prettyName": "Randomizer",
+					"icon": "fa-lightbulb-o",
+					"name": "randomizer",
+					"version": "2.0.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/randomizer/randomizer.zip",
+					"license": "ISC",
+					"description": "A random Track / Album Player",
+					"details": "",
+					"author": "Redlawd",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "4-7-2021"
+				},
+				{
+					"prettyName": "Philips Hue Control",
+					"icon": "fa-lightbulb-o",
+					"name": "hue_control",
+					"version": "1.0.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/hue_control/hue_control.zip",
+					"license": "GPL-3.0-only",
+					"description": "Connect with a Philips Hue bridge and control bulbs or smart power outlets based on the Volumio playback status.",
+					"details": "",
+					"author": {
+						"name": "André Iske",
+						"email": "andre.iske@mailbox.org",
+						"url": "https://github.com/a-i-ks"
+					},
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "23-5-2021"
+				},
+				{
+					"prettyName": "Music Services Shield",
+					"icon": "fa-lightbulb-o",
+					"name": "music_services_shield",
+					"version": "1.2.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/music_services_shield/music_services_shield.zip",
+					"license": "ISC",
+					"description": "Separates music processes from other processes, allocates them to their own CPU and assigns them real time priority.",
+					"details": "",
+					"author": "Pete Callaghan",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "8-7-2021"
+				}
+			]
+		},
+		{
+			"prettyName": "System Tools",
+			"name": "system_controller",
+			"id": "cat3",
+			"description": "Volumio System Tools",
+			"plugins": [
+				{
+					"prettyName": "GPIO Buttons",
+					"icon": "fa-microchip",
+					"name": "gpio-buttons",
+					"version": "0.8.1",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/system_controller/gpio-buttons/gpio-buttons.zip",
+					"license": "ISC",
+					"description": "GPIO button-listener plugin for Volumio2",
+					"details": "<h4>GPIO Buttons</h4><br>Control basic playback functions by connecting buttons to Raspberry Pi GPIOs<br>Features:<br><ul><li>Play/pause</li><li>Next/previous</li><li>Volume +/-</li><li>Shutdown</li></ul><br><strong><a href=\"https://volumio.org/forum/gpio-buttons-control-volumio2-with-buttons-t4437.html\" target=\"blank\">Click here for infos and wiring instructions</a></strong>",
+					"author": "tomatpasser",
+					"screenshots": [
+						{
+							"image": "http://tomatpasser.dk/gpio-buttons2.png",
+							"thumb": "http://tomatpasser.dk/gpio-buttons2.png"
+						}
+					],
+					"updated": "20-6-2018"
+				},
+				{
+					"prettyName": "Backup & Restore Data",
+					"icon": "fa-floppy-o",
+					"name": "backup_restore",
+					"version": "0.7.2",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/system_controller/backup_restore/backup_restore.zip",
+					"license": "ISC",
+					"description": "This plugin allows User to locally backup volumio data (playlists, settings, etc) and restore later",
+					"details": "<h4>Backup & Restore Plugin</h4><br>Locally back-up and restore Volumio data<br><br>Choose which sets of data you want to archive (queue, playlist, Favourites, Configuration, Album Art), and hit backup button:<br>Generated archive file will then be available from Volumio SMB share.<br>That file may be copied & put-back in similar location on another (or re-imaged) device for restore.",
+					"author": "macmpi",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "16-11-2018"
+				},
+				{
+					"prettyName": "Audiophonics ON/OFF",
+					"icon": "fa-lightbulb-o",
+					"name": "audiophonicsonoff",
+					"version": "1.0.3",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/system_controller/audiophonicsonoff/audiophonicsonoff.zip",
+					"license": "GPL-3.0",
+					"description": "Minimized Audiophonics plugin for button management, copied from RaspDac by Jedail",
+					"details": "RPI power management for Audiophonics board",
+					"author": "Saiyato",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "29-3-2019"
+				},
+				{
+					"prettyName": "GPIO Control",
+					"icon": "fa-lightbulb-o",
+					"name": "gpio_control",
+					"version": "0.0.1",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/system_controller/gpio_control/gpio_control.zip",
+					"license": "ISC",
+					"description": "GPIO output control plugin for Volumio",
+					"details": "GPIO control can react to Volumio events and control GPIO",
+					"author": "supercrab",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "29-3-2019"
+				},
+				{
+					"prettyName": "GPIO Radio Buttons",
+					"icon": "fa-lightbulb-o",
+					"name": "gpio_radio_buttons",
+					"version": "0.1.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/system_controller/gpio_radio_buttons/gpio_radio_buttons.zip",
+					"license": "ISC",
+					"description": "Allows the Raspberry PI GPIO pins to be used with physical push buttons to select different radio stations from the 'Favourite Radios' list in a modern take on old-fashioned radio buttons.",
+					"details": "",
+					"author": "Kevin Thomas",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "25-2-2021"
+				}
+			]
+		},
+		{
+			"prettyName": "Accessories",
+			"name": "accessory",
+			"id": "cat3",
+			"description": "Plugins for Volumio Accessories",
+			"plugins": [
+				{
+					"prettyName": "IR Remote Controller",
+					"icon": "fa-magic",
+					"name": "ir_controller",
+					"version": "1.4.2",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/accessory/ir_controller/ir_controller.zip",
+					"license": "GPLv3",
+					"description": "Volumio IR Remote plugin",
+					"details": "<h4>IR Remote Controller Plugin </h4><br>This Plugin has been sponsored by <a href=\"https://www.justboom.co/?utm_source=JustBoom+Player&utm_medium=Software&utm_campaign=JustBoom+Player+Software&utm_content=IR+Remote+Plugin+Main+Site+Link\" target=\"blank\">JustBoom</a> and it works out of the box with <a href=\"https://www.justboom.co/product/justboom-ir-remote/?utm_source=JustBoom+Player&utm_medium=Software&utm_campaign=JustBoom+Player+Software&utm_content=IR+Remote+Plugin+Link\" target=\"blank\">JustBoom IR Remote</a><br><br>FEATURES: <br><br><ul><li>3 profiles available (JustBoom IR Remote, Odroid Remote, Apple remote)</li><li>Controls: Play, pause, mute, volume, next, previous, seek, repeat and random</li></ul>",
+					"author": "Volumio Team",
+					"screenshots": [],
+					"updated": "14-5-2021"
+				},
+				{
+					"prettyName": "PI2 Design 503HTA Tube DAC Plugin",
+					"icon": "fa-lightbulb-o",
+					"name": "503_hta_tube_amp",
+					"version": "1.0.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/accessory/503_hta_tube_amp/tubeamp.zip",
+					"license": "Free for non commercial USE",
+					"description": "This plugin allows to use GPIO functionalities of the PI2 Design 503hta Tube AMP-DAC",
+					"details": "<h4>PI2 Design 503hta Tube AMP-DAC</h4><br>This plugin allows to use GPIO functionalities of the 503hta Tube AMP-DAC<br><br><ul><li>Shutdown</li><li>High Frequency Rolloff Filter</li></ul><br><br>&nbsp;&nbsp;<strong><a href=\"https://volumio.org/product/pi2design-503hta-hybrid-tube-amp/\" target=\"blank\">Get the PI2 Design 503hta Tube AMP-DAC on Volumio Shop</a></strong>",
+					"author": "Volumio Team",
+					"screenshots": [],
+					"updated": "11-11-2016"
+				}
+			]
+		},
+		{
+			"prettyName": "user interface",
+			"name": "user_interface",
+			"id": "cat6",
+			"description": "",
+			"plugins": [
+				{
+					"prettyName": "Rotary Encoder",
+					"icon": "fa-circle-o-notch",
+					"name": "rotaryencoder",
+					"version": "1.2.4",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/user_interface/rotaryencoder/rotaryencoder.zip",
+					"license": "MIT",
+					"description": "Provides a rotary encoder interface for use in Volumio 2.x",
+					"details": "",
+					"author": "Saiyato",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "28-6-2021"
+				},
+				{
+					"prettyName": "LedStatus",
+					"icon": "fa-lightbulb-o",
+					"name": "ledstatus",
+					"version": "1.0.1",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/user_interface/ledstatus/ledstatus.zip",
+					"license": "ISC",
+					"description": "blink gpio led while playing",
+					"details": "",
+					"author": "jit06",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "5-4-2021"
+				},
+				{
+					"prettyName": "Status2mqtt",
+					"icon": "fa-lightbulb-o",
+					"name": "status2mqtt",
+					"version": "1.0.1",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/user_interface/status2mqtt/status2mqtt.zip",
+					"license": "ISC",
+					"description": "publish volumio status to an mqtt server",
+					"details": "",
+					"author": "jit06",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "6-2-2021"
+				},
+				{
+					"prettyName": "Gpio Random",
+					"icon": "fa-lightbulb-o",
+					"name": "gpiorandom",
+					"version": "2.1.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/user_interface/gpiorandom/gpiorandom.zip",
+					"license": "ISC",
+					"description": "Play a randomized playlist, play a web radio or toggle play / pause uppon single, double and / or triple click on a GPIO wired button",
+					"details": "",
+					"author": "jit06",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "24-5-2021"
+				}
+			]
+		}
+	]
+}
