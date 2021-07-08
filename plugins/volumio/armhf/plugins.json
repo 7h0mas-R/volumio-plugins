@@ -180,7 +180,7 @@
 					"prettyName": "Pandora",
 					"icon": "fa-lightbulb-o",
 					"name": "pandora",
-					"version": "2.7.2",
+					"version": "2.9.2",
 					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/pandora/pandora.zip",
 					"license": "ISC",
 					"description": "A plugin to access Pandora Web Radio",
@@ -192,7 +192,7 @@
 							"thumb": ""
 						}
 					],
-					"updated": "31-10-2020",
+					"updated": "28-6-2021",
 					"stable": true
 				},
 				{
@@ -237,7 +237,7 @@
 					"prettyName": "Nanosound CD",
 					"icon": "fa-lightbulb-o",
 					"name": "nanosound_cd",
-					"version": "1.2.2",
+					"version": "1.2.3",
 					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/nanosound_cd/nanosound_cd.zip",
 					"license": "ISC",
 					"description": "Nanosound CD playback and extraction plug-in by Nanomesher",
@@ -249,7 +249,7 @@
 							"thumb": ""
 						}
 					],
-					"updated": "2-2-2021"
+					"updated": "15-4-2021"
 				},
 				{
 					"prettyName": "Radio Nowy Swiat",
@@ -323,6 +323,24 @@
 					],
 					"updated": "25-1-2021",
 					"stable": true
+				},
+				{
+					"prettyName": "80s80s Radio",
+					"icon": "fa-lightbulb-o",
+					"name": "80s80s",
+					"version": "1.0.2",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/music_service/80s80s/80s80s.zip",
+					"license": "ISC",
+					"description": "80s80s Radio Plugin for Volumio2",
+					"details": "",
+					"author": "marco79cgn",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "15-5-2021"
 				}
 			]
 		},
@@ -548,7 +566,7 @@
 					"prettyName": "tradfri",
 					"icon": "fa-lightbulb-o",
 					"name": "tradfri",
-					"version": "1.0.1",
+					"version": "1.0.3",
 					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/tradfri/tradfri.zip",
 					"license": "ISC",
 					"description": "Switch Tradfri devices on/off based on the Volumio player state.",
@@ -560,14 +578,14 @@
 							"thumb": ""
 						}
 					],
-					"updated": "11-9-2020",
+					"updated": "28-6-2021",
 					"stable": true
 				},
 				{
 					"prettyName": "miniDLNA",
 					"icon": "fa-server",
 					"name": "minidlna",
-					"version": "1.1.5",
+					"version": "1.1.7",
 					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/minidlna/minidlna.zip",
 					"license": "ISC",
 					"description": "The plugin installs and configures a miniDLNA server.",
@@ -579,7 +597,7 @@
 							"thumb": ""
 						}
 					],
-					"updated": "6-8-2020",
+					"updated": "10-5-2021",
 					"stable": true
 				},
 				{
@@ -677,10 +695,10 @@
 					"prettyName": "Philips amBX",
 					"icon": "fa-lightbulb-o",
 					"name": "ambx",
-					"version": "1.0.1",
+					"version": "1.0.2",
 					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/ambx/ambx.zip",
 					"license": "BSD-3-Clause",
-					"description": "A rudimentary controller for the LEDs of the Philips amBX sound system.",
+					"description": "A rudimentary controller for the Philips amBX sound system.",
 					"details": "",
 					"author": "Jan Siegmund",
 					"screenshots": [
@@ -689,7 +707,65 @@
 							"thumb": ""
 						}
 					],
-					"updated": "5-4-2021"
+					"updated": "24-5-2021"
+				},
+				{
+					"prettyName": "Randomizer",
+					"icon": "fa-lightbulb-o",
+					"name": "randomizer",
+					"version": "2.0.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/randomizer/randomizer.zip",
+					"license": "ISC",
+					"description": "A random Track / Album Player",
+					"details": "",
+					"author": "Redlawd",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "4-7-2021"
+				},
+				{
+					"prettyName": "Philips Hue Control",
+					"icon": "fa-lightbulb-o",
+					"name": "hue_control",
+					"version": "1.0.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/hue_control/hue_control.zip",
+					"license": "GPL-3.0-only",
+					"description": "Connect with a Philips Hue bridge and control bulbs or smart power outlets based on the Volumio playback status.",
+					"details": "",
+					"author": {
+						"name": "André Iske",
+						"email": "andre.iske@mailbox.org",
+						"url": "https://github.com/a-i-ks"
+					},
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "23-5-2021"
+				},
+				{
+					"prettyName": "Music Services Shield",
+					"icon": "fa-lightbulb-o",
+					"name": "music_services_shield",
+					"version": "1.2.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/miscellanea/music_services_shield/music_services_shield.zip",
+					"license": "ISC",
+					"description": "Separates music processes from other processes, allocates them to their own CPU and assigns them real time priority.",
+					"details": "",
+					"author": "Pete Callaghan",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "8-7-2021"
 				}
 			]
 		},
@@ -801,14 +877,14 @@
 					"prettyName": "IR Remote Controller",
 					"icon": "fa-magic",
 					"name": "ir_controller",
-					"version": "1.4.1",
+					"version": "1.4.2",
 					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/accessory/ir_controller/ir_controller.zip",
 					"license": "GPLv3",
 					"description": "Volumio IR Remote plugin",
 					"details": "<h4>IR Remote Controller Plugin </h4><br>This Plugin has been sponsored by <a href=\"https://www.justboom.co/?utm_source=JustBoom+Player&utm_medium=Software&utm_campaign=JustBoom+Player+Software&utm_content=IR+Remote+Plugin+Main+Site+Link\" target=\"blank\">JustBoom</a> and it works out of the box with <a href=\"https://www.justboom.co/product/justboom-ir-remote/?utm_source=JustBoom+Player&utm_medium=Software&utm_campaign=JustBoom+Player+Software&utm_content=IR+Remote+Plugin+Link\" target=\"blank\">JustBoom IR Remote</a><br><br>FEATURES: <br><br><ul><li>3 profiles available (JustBoom IR Remote, Odroid Remote, Apple remote)</li><li>Controls: Play, pause, mute, volume, next, previous, seek, repeat and random</li></ul>",
 					"author": "Volumio Team",
 					"screenshots": [],
-					"updated": "10-3-2021"
+					"updated": "14-5-2021"
 				},
 				{
 					"prettyName": "PI2 Design 503HTA Tube DAC Plugin",
@@ -835,7 +911,7 @@
 					"prettyName": "Rotary Encoder",
 					"icon": "fa-circle-o-notch",
 					"name": "rotaryencoder",
-					"version": "1.2.2",
+					"version": "1.2.4",
 					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/user_interface/rotaryencoder/rotaryencoder.zip",
 					"license": "MIT",
 					"description": "Provides a rotary encoder interface for use in Volumio 2.x",
@@ -847,7 +923,7 @@
 							"thumb": ""
 						}
 					],
-					"updated": "26-3-2019"
+					"updated": "28-6-2021"
 				},
 				{
 					"prettyName": "LedStatus",
@@ -889,7 +965,7 @@
 					"prettyName": "Gpio Random",
 					"icon": "fa-lightbulb-o",
 					"name": "gpiorandom",
-					"version": "2.0.0",
+					"version": "2.1.0",
 					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/user_interface/gpiorandom/gpiorandom.zip",
 					"license": "ISC",
 					"description": "Play a randomized playlist, play a web radio or toggle play / pause uppon single, double and / or triple click on a GPIO wired button",
@@ -901,25 +977,7 @@
 							"thumb": ""
 						}
 					],
-					"updated": "5-4-2021"
-				},
-				{
-					"prettyName": "Rotary Encoder II",
-					"icon": "fa-lightbulb-o",
-					"name": "rotaryencoder2",
-					"version": "1.0.0",
-					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/user_interface/rotaryencoder2/rotaryencoder2.zip",
-					"license": "ISC",
-					"description": "Alternative implementation of Rotary Encoder controls using the Linux Kernel driver for Rotaries.",
-					"details": "Alternative rotary encoder driver using Linux DTOverlay driver. Documentation and tips for debouncing on the Documentation page.",
-					"author": "7h0mas-R",
-					"screenshots": [
-						{
-							"image": "",
-							"thumb": ""
-						}
-					],
-					"updated": "19-6-2021"
+					"updated": "24-5-2021"
 				}
 			]
 		}
