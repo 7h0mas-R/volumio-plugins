@@ -996,6 +996,24 @@
 						}
 					],
 					"updated": "9-7-2021"
+				},
+				{
+					"prettyName": "testWS",
+					"icon": "fa-lightbulb-o",
+					"name": "testws",
+					"version": "1.0.0",
+					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/user_interface/testws/testws.zip",
+					"license": "ISC",
+					"description": "just for test",
+					"details": "tests socket.emit",
+					"author": "7h0mas-R",
+					"screenshots": [
+						{
+							"image": "",
+							"thumb": ""
+						}
+					],
+					"updated": "10-7-2021"
 				}
 			]
 		}
