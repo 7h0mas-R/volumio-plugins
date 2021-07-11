@@ -987,7 +987,7 @@
 					"url": "http://volumio.github.io/volumio-plugins/plugins/volumio/armhf/user_interface/rotaryencoder2/rotaryencoder2.zip",
 					"license": "ISC",
 					"description": "Alternative implementation of Rotary Encoder controls using the Linux Kernel driver for Rotaries.",
-					"details": "Alternative implementation of Rotary Encoder controls using the Linux Kernel driver for Rotaries.",
+					"details": "The plugin supports configuration of up to three rotary-encoders by using the device-tree overlay driver supplied with Raspbian based kernels for RPi.",
 					"author": "7h0mas-R",
 					"screenshots": [
 						{
